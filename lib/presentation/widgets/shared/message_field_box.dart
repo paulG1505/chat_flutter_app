@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 class MassageFieldBox extends StatelessWidget {
-  const MassageFieldBox({super.key});
+  //se crea para capturar el valor y enviarlo al provider
+  final ValueChanged onValue;
+
+  const MassageFieldBox({super.key, required this.onValue});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +24,8 @@ class MassageFieldBox extends StatelessWidget {
         icon: const Icon(Icons.send_outlined),
         onPressed: () {
           final textValue = textController.value.text;
-          print('button $textValue');
+          //se envia el valor
+          onValue(textValue);
           textController.clear();
         },
       ),
@@ -37,6 +41,7 @@ class MassageFieldBox extends StatelessWidget {
         onFieldSubmitted: (value) {
           textController.clear();
           focusNode.requestFocus(); //despues que se limpia el foco se mantine
+          onValue(value);
         });
   }
 }

@@ -17,7 +17,7 @@ class ChatScreen extends StatelessWidget {
             padding: EdgeInsets.all(8.0),
             child: CircleAvatar(
               backgroundImage: NetworkImage(
-                  'https://i.pinimg.com/550x/35/f6/71/35f6716adc65383508eca7cfda5b5594.jpg'),
+                  'https://cdn2.iconfinder.com/data/icons/smiles-business/512/1041_boy_c-512.png'),
             ),
           ),
           title: const Text('Contact'),
@@ -43,16 +43,20 @@ class _ChatView extends StatelessWidget {
           children: [
             Expanded(
                 child: ListView.builder(
+                  //control de la lista
+              controller: chatProvider.chatScrollController,
               itemCount: chatProvider.messages.length,
               itemBuilder: (context, index) {
                 final message = chatProvider.messages[index];
                 //identificamos de quien es el mensaje
                 return (message.fromWho == FromWho.hers)
-                    ? HerMessageBubble(message:message)
-                    : MyMessageBubble(message:message);
+                    ? HerMessageBubble(message: message)
+                    : MyMessageBubble(message: message);
               },
             )),
-            const MassageFieldBox()
+            MassageFieldBox(
+              onValue: (value) => chatProvider.sendMessage(value),
+            )
           ],
         ),
       ),
